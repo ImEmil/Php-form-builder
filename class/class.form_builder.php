@@ -36,7 +36,7 @@ class Form {
 			$this->method, $this->action, $this->former, $this->button($this->name, $value));
 			}
 			else {
-				echo "hej";
+				echo "Successful!";
 			}
 	}
 

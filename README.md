@@ -18,5 +18,5 @@ Example of usage so far:
 	$form->render("Next"); // Button text  <> Generates the form
 	
 	if($form->control()) { // If users clicks on button
-		echo $_GET['username'];
+		echo $form->filter($_GET['username']);
 	}

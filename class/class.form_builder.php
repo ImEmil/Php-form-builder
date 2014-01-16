@@ -1,4 +1,10 @@
 <?php
+/*
+                                                   +-+-+-+-+-+-+
+                                                   |I|m|E|m|i|l|
+                                                   +-+-+-+-+-+-+
+                                         
+*/
 class Form {
 	public $action, $inputs, $former, $data, $name, $input = [], $method = "GET";
 

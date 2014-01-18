@@ -6,18 +6,22 @@ This form builder generates the form &amp; the inputs and validates 'em
 =================
 Example of usage so far:
 
-	<?php 
+	<?php
 		require("class/class.form_builder.php");
-		$form = new Form("example.php", "test_form"); // action file , form name
-
+		
+		$form = new Form("index.php", "contact_us"); // Action file, button name
+		
 		$form->inputs([
-			'username' => 'Your username', // input name, label text
-			'lastname' => 'Your lastname', // input name, label text
-			'email'    => 'Your email',    // input name, label text
+			'username' => 'Your username', // Input name, label value
+			'email'    => 'Your email',
 		]);
 
-	$form->render("Next"); // Button text  <> Generates the form
-	
-	if($form->control()) { // If users clicks on button
-		echo $form->filter($_GET['username']);
+	if($form->submitted()) {
+
+		echo " Hello {$_POST['username']}, your email is <i>{$_POST['email']} ";
+		echo " <button><a href='index.php'>Return</a></button> ";
 	}
+	else {
+		$form->render("Continue"); // Button text\value
+	}
+ ?>

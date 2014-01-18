@@ -9,11 +9,11 @@ Example of usage so far:
 	<?php
 		require("class/class.form_builder.php");
 		
-		$form = new Form("index.php", "contact_us"); // Action file, button name
+		$form = new Form("index.php", "contact_us");	// Action file, button name
 		
 		$form->inputs([
-			'username' => 'Your username', // Input name, label value
-			'email'    => 'Your email',
+			'username' => 'Your username',	// Input name, label value
+			'email'    => 'Your email'
 		]);
 
 	if($form->submitted()) {
@@ -22,6 +22,6 @@ Example of usage so far:
 		echo " <button><a href='index.php'>Return</a></button> ";
 	}
 	else {
-		$form->render("Continue"); // Button text\value
+		$form->render("Continue");	// Button text\value
 	}
- ?>
+ 

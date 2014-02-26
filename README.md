@@ -7,7 +7,7 @@ This form builder generates the form &amp; the inputs and validates 'em
 Example of usage so far:
 
 	<?php
-		require("class/class.form_builder.php");
+	require("class/class.form_builder.php");
 
 	$form1 = new form("index.php", "post");	// Action File, Method
 

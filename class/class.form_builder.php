@@ -1,52 +1,80 @@
 <?php
-class Form {
-	public $action, $inputs, $former, $data, $name, $input = [], $method = "POST";
+class form {
 
-	static $required = true;	// Default true, set it to false if you don't want any requirement
+	public $action = '', $method = '', $stored = '', $inputs = [];
 
-	function __construct($action, $name) {
+	public function __construct($action, $method)
+	{
 		$this->action = $action;
-		$this->name   = $name;
+		$this->method = $method;
 	}
 
-	static function filter($string) {
-		return trim(strip_tags(htmlspecialchars( $string, ENT_QUOTES, 'utf-8')));
+	public function create($type)
+	{
+		return $type;
 	}
 
-	static function redirect($page, $seconds) {
-		echo("<meta http-equiv=\"refresh\" content=\"{$seconds};url={$page}\" />");
-	}
-
-	public function inputs($input) {
-		$this->inputs[$input];
-		foreach($input as $this->inputs => $input) {
-			$this->throwError($this->inputs, "Type in your {$this->inputs}");
-			$this->data   .=  self::filter(isset($_POST[$this->inputs]));	// Every input has it's value  stored in $this->data variable
-			$this->former .=  sprintf("<label for='%s'> %s: </label> <input type='text' name='%s' id='%s' placeholder='Type in %s'> <br>",
-			$this->inputs ,$input, $this->inputs, $this->inputs, $input);
+	public function build()
+	{
+		foreach($this->inputs as $input)
+		{
+			$this->stored .= $input;
 		}
+		return $this;
 	}
 
-	public function throwError($input, $msg) {
-		if(Form::$required == true && isset($_POST[$input])) {
-		 $input = self::filter($_POST[$input]);
-		 return(empty($input) ? self::redirect($_SERVER['HTTP_REFERER'], 3) . die("Error: {$msg}") : false);
+	public function render()
+	{
+		echo(sprintf("<form action=\"%s\" method=\"%s\"> \t\n\n%s\n\t </form>",$this->action, $this->method, $this->stored));
+	}
+
+
+	public function input($type, $name, $maxchar, $label)
+	{
+		$this->inputs[] = sprintf("<label for=\"%s\">%s</label> <br> \n \n <input id=\"%s\"  type=\"%s\" name=\"%s\" placeholder=\"%s\" maxlength=\"%s\">",
+		$name, $label, $type, $name, $name, $label, $maxchar);
+		return $this->inputs;
+	}
+
+	public function textarea($name, $rows, $maxlength, $label)
+	{
+		$this->inputs[] = sprintf("<label for=\"%s\">%s</label> <br> \n \n <textarea id=\"%s\" name=\"%s\" rows=\"%s\" maxlength=\"%s\" placeholder=\"%s\"></textarea>",
+		$name, $label, $name, $name, $rows, $maxlength, $label);
+		return $this->inputs;
+	}
+
+	public function radio($name, $value, $label)
+	{
+		$this->inputs[] = sprintf("<label for=\"%s\">%s</label> <br> \n \n <input id=\"%s\" type=\"radio\" name=\"%s\" value=\"%s\">",
+		$name, $label, $name, $name, $value);
+		return $this->inputs;
+	}
+
+	public function checkbox($name, $value, $label)
+	{
+		$this->inputs[] = sprintf("<label for=\"%s\">%s</label> <br> \n \n <input id=\"%s\" type=\"checkbox\" name=\"%s\" value=\"%s\">",
+		$name, $label, $name, $name, $value);
+		return $this->inputs;
+	}
+
+	public function select($name, $label, $options = array())
+	{
+		$op = null;
+
+		foreach($options as $option => $value)
+		{
+			$op .= "<option value=\"{$value}\"> {$option} </option>";
 		}
+
+			$this->inputs[] = sprintf("<label for=\"%s\">%s</label> <br> \n \n <select id=\"%s\" name=\"%s\">%s</select>",
+			$name, $label, $name, $name, $op);
+
+		return $this->inputs;
 	}
 
-	public function button($name, $value) {
-		return "<button type=\"submit\" name=\"{$name}\">{$value}</button>";
-	}
-	
-	public function render($value) {
-		if(!$this->submitted()) {
-		echo
-		sprintf("<form method=\"%s\" action=\"%s\">%s %s</form>",
-			$this->method, $this->action, $this->former, $this->button($this->name, $value));
-			}
-	}
-	
-	public function submitted() {
-		return(isset($_POST[$this->name]) ? true : false);
+	public function button($type, $name, $text)
+	{
+		$this->inputs[] = sprintf("\n\t<button type=\"%s\" name=\"%s\"> %s </button>", $type, $name, $text);
+		return $this->inputs;
 	}
 }
